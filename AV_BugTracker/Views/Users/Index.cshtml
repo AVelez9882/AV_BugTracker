@@ -1,0 +1,39 @@
+﻿@using AV_BugTracker.Models;
+@model IEnumerable<ApplicationUser>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayName("Full Name")
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Email)
+		</th>
+		<th></th>
+	</tr>
+
+	@foreach (var user in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => user.FullName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => user.Email)
+			</td>
+			<td>
+				@Html.ActionLink("Manage Role", "ManageUserRole", "Users", new { id = user.Id }, null) |
+				@Html.ActionLink("Manage Projects", "ManageUserProjects", "Assignments", new { id = user.Id }, null)
+
+			</td>
+		</tr>
+	}
+
+</table>

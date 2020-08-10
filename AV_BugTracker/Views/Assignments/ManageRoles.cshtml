@@ -1,0 +1,65 @@
+﻿
+@using AV_BugTracker.Models;
+@using AV_BugTracker.Helpers;
+@model IEnumerable<ApplicationUser>
+
+@{
+	ViewBag.Title = "ManageRoles";
+	var roleHelper = new UserRoleHelper();
+}
+
+
+
+<h2>Manage Roles</h2>
+
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-group">
+		@Html.Label("Registered Users", htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.ListBox("UserIds")
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.Label("System Roles", htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.DropDownList("RoleName", "-- no role --")
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<button type="submit" class="btn btn-primary">Manage Role Assignment(s)</button>
+		</div>
+	</div>
+}
+
+<hr />
+
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayName("Email")
+		</th>
+		<th>
+			@Html.DisplayName("Role")
+		</th>
+	</tr>
+
+	@foreach (var person in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => person.Email)
+			</td>
+			<td>
+				@roleHelper.ListUserRoles(person.Id).FirstOrDefault()
+			</td>
+		</tr>
+	}
+
+</table>
