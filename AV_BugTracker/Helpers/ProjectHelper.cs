@@ -14,6 +14,7 @@ namespace AV_BugTracker.Helpers
 	public class ProjectHelper
 	{
 		ApplicationDbContext db = new ApplicationDbContext();
+		UserRoleHelper roleHelper = new UserRoleHelper();
 
 		public bool IsUserOnProject(string userId, int projectId)
 		{
@@ -64,6 +65,21 @@ namespace AV_BugTracker.Helpers
 		{
 			return db.Users.Where(u => u.Projects.All(p => p.Id != projectId)).ToList();
 
+		}
+
+		public List<ApplicationUser> ListUsersonProjectInRole(int projectId, string roleName)
+		{
+			var userList = UsersOnProject(projectId);
+			var resultList = new List<ApplicationUser>();
+			foreach (var user in userList)
+			{
+				if (roleHelper.IsUserInRole(user.Id, roleName))
+				{
+					resultList.Add(user);
+				}
+			}
+
+			return resultList;
 		}
 	}
 }
