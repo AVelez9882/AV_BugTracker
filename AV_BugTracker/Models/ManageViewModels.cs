@@ -47,7 +47,7 @@ namespace AV_BugTracker.Models
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {6} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
@@ -61,16 +61,16 @@ namespace AV_BugTracker.Models
     public class ExtendedChangeViewModel : ChangePasswordViewModel
     {
         [Required]
-        [StringLength(40, ErrorMessage = "The {0} must be at least {2} characters long, and no longer than {40} characters.", MinimumLength = 2)]
+        [StringLength(40, ErrorMessage = "The {0} must be at least {2} characters long, and no longer than 40 characters.", MinimumLength = 2)]
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(40, ErrorMessage = "The {0} must be at least {2} characters long, and no longer than {40} characters.", MinimumLength = 2)]
+        [StringLength(40, ErrorMessage = "The {0} must be at least {2} characters long, and no longer than 40 characters.", MinimumLength = 2)]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [StringLength(40, ErrorMessage = "The {0} must be at least {2} characters long, and no longer than {40} characters.", MinimumLength = 2)]
+        [StringLength(40, ErrorMessage = "The {0} must be at least {2} characters long, and no longer than 40 characters.", MinimumLength = 2)]
         [Display(Name = "Display name")]
         public string DisplayName { get; set; }
 

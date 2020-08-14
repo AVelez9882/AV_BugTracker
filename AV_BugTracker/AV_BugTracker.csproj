@@ -183,9 +183,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ImageUploadValidator.cs" />
+    <Compile Include="Helpers\FileUploadValidator.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
     <Compile Include="Helpers\StringUtilities.cs" />
+    <Compile Include="Helpers\TicketHelper.cs" />
+    <Compile Include="Helpers\TicketManager.cs" />
     <Compile Include="Helpers\UserNameHelper.cs" />
     <Compile Include="Helpers\UserRoleHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -214,6 +216,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\default_avatar.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Private.config" />
@@ -268,7 +271,7 @@
     <Content Include="Views\Projects\Edit.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
     <Content Include="Views\Tickets\Create.cshtml" />
-    <Content Include="Views\Tickets\Details.cshtml" />
+    <Content Include="Views\Tickets\Dashboard.cshtml" />
     <Content Include="Views\Tickets\Edit.cshtml" />
     <Content Include="Views\Tickets\Index.cshtml" />
     <Content Include="Views\TicketAttachments\Create.cshtml" />
@@ -312,6 +315,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Avatars\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

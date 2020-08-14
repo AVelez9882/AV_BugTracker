@@ -13,6 +13,7 @@ namespace AV_BugTracker.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -224,16 +225,25 @@ namespace AV_BugTracker.Controllers
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<ActionResult> ChangePassword(ExtendedChangeViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            
+
+
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.UserName = model.Email;
+                user.Email = model.Email;
+                await db.SaveChangesAsync();
+                
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -242,6 +252,7 @@ namespace AV_BugTracker.Controllers
             }
             AddErrors(result);
             return View(model);
+
         }
 
         //

@@ -18,33 +18,75 @@ namespace AV_BugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private ProjectHelper projectHelper = new ProjectHelper();
         private UserRoleHelper roleHelper = new UserRoleHelper();
+        private TicketManager ticketManager = new TicketManager();
+
 
         // GET: Tickets
+        [Authorize]
         public ActionResult Index()
         {
+            //var userId = User.Identity.GetUserId();
+            //var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+            //List<Ticket> model = new List<Ticket>();
+            //switch (myRole)
+            //{
+            //    case "Admin":
+            //        model = db.Tickets.ToList();
+            //        break;
+            //    case "ProjectManager":
+            //    case "Developer":
+            //        model = projectHelper.ListUserProjects(userId).SelectMany(p => p.Tickets).ToList();
+            //        break;
+            //    case "Submitter":
+            //        model = db.Tickets.Where(T => T.SubmitterId == userId).ToList();
+            //        break;
+            //    default:
+            //        return RedirectToAction("Index", "Home");
+            //}
+            //return View(model);
+
+            //var myUserId = User.Identity.GetUserId()
+            //var myTickets = ticketManager.GetMyTickets(myUserId);
+            //return View(myTickets);
+            return View(db.Tickets.ToList());
+        }
+
+        public ActionResult GetProjectTickets()
+        {
             var userId = User.Identity.GetUserId();
-            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
-            List<Ticket> model = new List<Ticket>();
-            switch (myRole)
+            var user = db.Users.Find(userId);
+            var ticketList = new List<Ticket>();
+            ticketList = user.Projects.SelectMany(p => p.Tickets).ToList();
+
+            return View("Index", ticketList);
+        }
+
+        public ActionResult GetMyTickets()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var ticketList = new List<Ticket>();
+
+            if (User.IsInRole("Developer"))
             {
-                case "Admin":
-                    model = db.Tickets.ToList();
-                    break;
-                case "Project Manager":
-                case "Developer":
-                    model = projectHelper.ListUserProjects(userId).SelectMany(p => p.Tickets).ToList();
-                    break;
-                case "Submitter":
-                    model = db.Tickets.Where(T => T.SubmitterId == userId).ToList();
-                    break;
-                default:
-                    return RedirectToAction("Index", "Home");
+                ticketList = db.Tickets.Where(t => t.DeveloperId == userId).ToList();
+                return View("Index", ticketList);
             }
-            return View(model);
+
+            if (User.IsInRole("Submitter"))
+            {
+                ticketList = db.Tickets.Where(t => t.SubmitterId == userId).ToList();
+                return View();
+            }
+            else 
+            {
+                return RedirectToAction("GetProjectTickets");
+            }
         }
 
         // GET: Tickets/Details/5
-        public ActionResult Details(int? id)
+        [Authorize]
+        public ActionResult Dashboard(int? id)
         {
             if (id == null)
             {

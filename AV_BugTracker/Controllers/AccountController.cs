@@ -11,6 +11,9 @@ using Microsoft.Owin.Security;
 using AV_BugTracker.Models;
 using System.Net.Mail;
 using System.Configuration;
+using System.IO;
+using System.Drawing;
+using System.Web.Configuration;
 
 namespace AV_BugTracker.Controllers
 {
@@ -159,8 +162,17 @@ namespace AV_BugTracker.Controllers
 					Email = model.Email,
 					FirstName = model.FirstName, 
 					LastName = model.LastName,
-					DisplayName = model.DisplayName
+					DisplayName = model.DisplayName,
+					AvatarPath = WebConfigurationManager.AppSettings["DefaultAvatarPath"]
 				};
+
+				if (model.Avatar != null)
+				{
+					//need iswebfriendly, datestamp 
+					var fileName = Path.GetFileName(model.Avatar.FileName);
+					model.Avatar.SaveAs(Path.Combine(Server.MapPath("~/Avatars/"), fileName));
+					user.AvatarPath = "/Avatars/" + fileName;
+				}
 
 
 				var result = await UserManager.CreateAsync(user, model.Password);
