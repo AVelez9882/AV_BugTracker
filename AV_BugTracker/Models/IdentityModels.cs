@@ -23,7 +23,7 @@ namespace AV_BugTracker.Models
 		#region Actual Properties
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string DisplayName { get; internal set; }
+        public string DisplayName { get; set; }
         public string AvatarPath { get; set; }
         [NotMapped]
         public string FullName 

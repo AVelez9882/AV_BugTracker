@@ -1,0 +1,77 @@
+BlogPost 2 
+
+Week 1 and 2 
+
+A lesson in stress management 
+
+Alright! Two weeks into the program and I've only had 3 crying sessions. I haven't been broken yet, though. 
+In all honesty, the reason I even find myself in these positions is because I struggle with the mental reset. 
+As mentioned in my first post, I have only ever worked in customer service related fields, 90% soft skills, 10% 
+basic office skills related to computers or data management, but nothing like this. While these skills are transferable and 
+valuable in any industry, I am also left feeling frustrated with not grasping certain concepts right away. 
+In school, and with previous jobs, I was always a top performer - surpassing goals and training other employees. 
+I considered myself to be intelligent, efficient and an empathetic employee. To now be in the middle is a frustation
+I have no concept of how to deal with, not yet at least. More of my time was spent being envious of and admiring other students in the 
+class who are working ahead and asking questions I couldn't even comprehended yet, and I asked myself yet again, "how did I get here?"
+There are three things i realized in this time; 
+	1. The frustration I am feeling is a result of unrealistic expectations, being two 
+weeks into learning a new skill and hoping to be building unique and complex programs right away. 
+Where I'm a beginner, I was comparing myself to others who come from varied backgrounds or who have prior 
+experience with technology and/or programming. In reality, I am keeping up with the class and expectations, meeting project deliverables
+and finding time in and out of class to research how to make my code better. While my understanding of the theory itself is just 
+scratching the surface, I am learning valuable skills in how to research and impliment resources that are available to us. Learning how
+to better optimize my time with information that is already available instead of trying to do everythig from scratch and ending up slamming
+my head on the desk (though there is plenty of that still, I simply am saving myself a horrible head injury).
+It is learning to accept that I cannot expect the world of myself without having first grasped and exercised the basics. 
+That is not only okay, it's perfectly normal and essential to truly learning new skills. This is an ongoing thought process where I am 
+learning to treat myself with kindness - this is merely one stepping stone towards mastering a skill and I rob myself of it by attempting 
+to speed past it simply to appear impressive. My peers are impressive, allowing myself to be the mentee this time is a humbling experience
+that I will learn to treasure.
+	2. Secondly, learning that it's okay to ask questions. There is an unhelpful pride that pushes me in moments of confusion, it says 
+"you can figure this out on your own". Having this mentality isnt innately a bad thing, it fosters resourcefulness, research skills and critical thinking. 
+Even so, it holds the insidious pride that keeps me from asking for help when it is far past the time of productivity, and elbow deep into time wasting.
+This pride stems from the same part of me as the point above, the need to be the best. "The best" person does not need to ask for help."
+However, not only does this position not exist, no one knows everything, but it is unhelpful in a team environment where collaboration and 
+thinking problems out as a group can create more useful solutions that work for everyone rather than just me - if I ever found a solution.
+In the first week alone, I spent time looking at my screen like a deer in headlights wondering to myself why i don't know what to do, when it's been 3 days
+into learning a whole new language. 
+I allowed myself to be in ultimate stress mode more than once simply because I feared asking for help more than i feared never learning the answer. 
+Inevitably, I got over myself and made it past the first two weeks by swallowing my pride and allowing the support and cooperation that comes with 
+a group of students and teachers. Still, this is an invaluable lesson that I have learned and will take with me for as long as I need to. '
+Working through pride is a daily struggle, there is nothing wrong with wanting to be the best, but getting there alone is invariably more difficult, 
+and unecessarily so. 
+	3.Third, stress management. A major realization I've had, is that my success with prior work, while thoroughly earned through
+true effort, was done more quickly and easily because it didn't really challenge me. I have learned and gained so many useful skills 
+for the workplace that make me a more well rounded employee, however it lacked specialized skills and training to challenge me in a meaningful way. 
+This process has provoked me in ways I never have been before, it bumps up against everything I thought I knew and throws it all out the window.
+Clean slates can be a scary thing, it hard to start anew. Choosing this path, when easier ones exist, is a meaningful way out of the careers
+I've had prior to now. That sounds like a depressive void, and i don't want to spend too much time lingering on wasted energy, but it's an important point I've
+had to accept in order to move forward. This path will be a difficult one, in ways I don't have coping mechanisms for. For that reason, 
+it is essential to take time and decompress from the act of programming and schedule mental health sessions. As with anything, balance is key, I won't learn anything 
+if it's always freetime, but it is scientifically backed that not allowing breaks and rest only leads to stress and exhaustion. Neither of those bring about 
+effective work or learning. I have found myself breaking down thinking I will never reach a level of understanding with the material, when all I needed to do
+was step back and allow my brain to rest. It is similar to the concept of a second set of eyes being useful in finding a problem, sometimes we are just 
+too close to it, enveloped by our work, that we cannot see it anymore. Backing away and cooling off, looking at other things and resetting, will allow me 
+to come back with a fresh pair of eyes ready to tackle the tasks at hand. Allowing this break not only combats the harmful hustle culture of today that 
+creates an expectation of always being "on", but makes me a better worker and better learner. 
+At this point, as promised, I've laid out my mental journey thus far on changing careers and learning to code. However, I haven't spent much time
+discussing the code itself. In my next installment, I will be detailing the actual applications of what ive learned, thus far. 
+This will be a more practical look into what has gone into me learning this skill, and onward i hope to intermingle this with my dicussions related to mental health.
+I hope this has been helpful to you, and as always, allows you to feel like it's not just you who isn't a day 1 genuis.  
+Wishing you all the best and happy coding! 
+
+
+
+
+
+abstract
+
+Now for those good intentions. It's fine to want something, but it's another to put the work in. This includes the mental load of breaking barriers you've built around yourself that keep you from reaching your full potential. Here, I detail a few major realizations I had that helped me escape self-sabotage
+
+
+
+
+
+
+blog 1
+The Code to Hell is Paved with Good Intentions! This play on a famous saying has me laughing and shaking in my boots. However, puns aside, it is only one facet of the journey so far to becoming a developer. Fear and hope co-mingle as I learn to cope with changing careers in a field I had never considered before.

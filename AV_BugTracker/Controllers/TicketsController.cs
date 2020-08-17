@@ -84,7 +84,7 @@ namespace AV_BugTracker.Controllers
             }
         }
 
-        // GET: Tickets/Details/5
+        // GET: Tickets/Dashboard/5
         [Authorize]
         public ActionResult Dashboard(int? id)
         {
@@ -161,6 +161,7 @@ namespace AV_BugTracker.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
+            ViewBag.DeveloperId = new SelectList(db.Users, "Id", "LastName", ticket.DeveloperId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
@@ -176,11 +177,21 @@ namespace AV_BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                //go out and get an unedited copy of the ticket from the DB, as no tracking allows me 
+                //to store it in the variable without loading it to the database 
+                var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
+
+                //somehow compare the old ticket with the new ticket to make any number
+                //of decisions that might be required 
+                var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+                ticketManager.ManageTicketNotifications(oldTicket, newTicket);
+
                 return RedirectToAction("Index");
             }
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
+            ViewBag.DeveloperId = new SelectList(db.Users, "Id", "LastName", ticket.DeveloperId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);

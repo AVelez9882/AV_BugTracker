@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace AV_BugTracker.Models
 {
@@ -96,6 +97,8 @@ namespace AV_BugTracker.Models
         [StringLength(40, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
         [Display(Name = "Display name")]
         public string DisplayName { get; set; }
+
+        public HttpPostedFileBase Avatar { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -14,9 +14,11 @@ using System.Configuration;
 using System.IO;
 using System.Drawing;
 using System.Web.Configuration;
+using AV_BugTracker.Helpers;
 
 namespace AV_BugTracker.Controllers
 {
+
 	[Authorize]
 	public class AccountController : Controller
 	{
@@ -168,10 +170,13 @@ namespace AV_BugTracker.Controllers
 
 				if (model.Avatar != null)
 				{
-					//need iswebfriendly, datestamp 
-					var fileName = Path.GetFileName(model.Avatar.FileName);
-					model.Avatar.SaveAs(Path.Combine(Server.MapPath("~/Avatars/"), fileName));
-					user.AvatarPath = "/Avatars/" + fileName;
+					if (FileUploadValidator.IsWebFriendlyImage(model.Avatar))
+					{
+						var fileName = FileStamp.MakeUnique(model.Avatar.FileName);
+						var serverFolder = WebConfigurationManager.AppSettings["DefaultServerFolder"];
+						model.Avatar.SaveAs(Path.Combine(Server.MapPath("~/Avatars/"), fileName));
+						user.AvatarPath = $"{serverFolder}{fileName}";
+					}
 				}
 
 
@@ -199,7 +204,7 @@ namespace AV_BugTracker.Controllers
 						var svc = new EmailService();
 						await svc.SendAsync(email);
 
-						return View(new EmailModel());
+						return RedirectToAction("ConfirmationSent", "Account");
 					}
 					catch (Exception ex)
 					{

@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
+using AV_BugTracker.Helpers;
 using AV_BugTracker.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AV_BugTracker.Controllers
 {
     public class TicketAttachmentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private FileUploadValidator fileUploadValidator = new FileUploadValidator();
+        private FileStamp fileStamp = new FileStamp();
 
         // GET: TicketAttachments
         public ActionResult Index()
@@ -48,17 +54,37 @@ namespace AV_BugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,UserId,FilePath,Description,Created")] TicketAttachment ticketAttachment)
+        public ActionResult Create([Bind(Include = "TicketId,FileName")] TicketAttachment ticketAttachment, string attachmentDescription, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            if (file == null)
             {
-                db.TicketAttachments.Add(ticketAttachment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                TempData["Error"] = "You must supply a file!";
+                return RedirectToAction("Dashboard", "Tickets", new { id = ticketAttachment.TicketId });
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId", ticketAttachment.TicketId);
-            return View(ticketAttachment);
+            if (ModelState.IsValid)
+            {
+                if (FileUploadValidator.IsWebFriendlyImage(file) || FileUploadValidator.IsWebFriendlyFile(file))
+                {
+                    ticketAttachment.Description = attachmentDescription;
+                    ticketAttachment.Created = DateTime.Now;
+                    ticketAttachment.UserId = User.Identity.GetUserId();
+
+                    var fileName = FileStamp.MakeUnique(file.FileName);
+                    var serverFolder = WebConfigurationManager.AppSettings["DefaultAttachmentFolder"];
+                    file.SaveAs(Path.Combine(Server.MapPath("~/Avatars/"), fileName));
+                    ticketAttachment.FilePath = $"{serverFolder}{fileName}";
+
+                    db.TicketAttachments.Add(ticketAttachment);
+                    db.SaveChanges();
+
+                }
+
+                return RedirectToAction("Dashboard", "Tickets", new { id = ticketAttachment.TicketId });
+            }
+
+            TempData["Error"] = "The model was invalid!";
+            return RedirectToAction("Dashboard", "Tickets", new { id = ticketAttachment.TicketId });
         }
 
         // GET: TicketAttachments/Edit/5

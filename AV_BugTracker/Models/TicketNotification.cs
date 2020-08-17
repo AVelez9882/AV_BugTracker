@@ -18,7 +18,8 @@ namespace AV_BugTracker.Models
 
 
 		#region Actual Property
-		public string Message { get; set; }
+		public string Subject { get; set; }
+		public string Body { get; set; }
 		public DateTime Created { get; set; }
 		public bool IsRead { get; set; }
 		#endregion

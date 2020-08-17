@@ -183,6 +183,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FileStamp.cs" />
     <Compile Include="Helpers\FileUploadValidator.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
     <Compile Include="Helpers\StringUtilities.cs" />
@@ -316,6 +317,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Avatars\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
