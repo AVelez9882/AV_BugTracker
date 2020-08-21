@@ -19,6 +19,7 @@ namespace AV_BugTracker.Controllers
         private ProjectHelper projectHelper = new ProjectHelper();
         private UserRoleHelper roleHelper = new UserRoleHelper();
         private TicketManager ticketManager = new TicketManager();
+        private HistoryHelper historyHelper = new HistoryHelper();
 
 
         // GET: Tickets
@@ -177,17 +178,20 @@ namespace AV_BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                var thisTicket = db.Tickets.Find(ticket.Id);
+                thisTicket.ProjectId = ticket.ProjectId;
                 //go out and get an unedited copy of the ticket from the DB, as no tracking allows me 
                 //to store it in the variable without loading it to the database 
                 var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
 
-                db.Entry(ticket).State = EntityState.Modified;
+                //db.Entry(ticket).State = EntityState.Modified;  first two lines of code replace this so changes are maintained in the db/sql
                 db.SaveChanges();
 
                 //somehow compare the old ticket with the new ticket to make any number
                 //of decisions that might be required 
                 var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
                 ticketManager.ManageTicketNotifications(oldTicket, newTicket);
+                historyHelper.ManageHistories(oldTicket, newTicket);
 
                 return RedirectToAction("Index");
             }

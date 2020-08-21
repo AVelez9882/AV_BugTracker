@@ -73,7 +73,20 @@ namespace AV_BugTracker.Helpers
 
 
             //scenario 3: reassignment - neither old nor new ticket.DeveloperId is null, and they don't match 
+            if (oldTicket.DeveloperId != null && newTicket.DeveloperId != null && oldTicket.DeveloperId != newTicket.DeveloperId)
+            {
+                var reassignNotification = new TicketNotification()
+                {
+                    TicketId = oldTicket.Id,
+                    UserId = oldTicket.DeveloperId,
+                    Created = DateTime.Now,
+                    Subject = $"You have been unassigned from Ticket Id: {oldTicket.Id}",
+                    Body = $"Heads up, {oldTicket.Developer.FirstName}, you have been unassigned from Ticket Id: {oldTicket.Id} titled '{oldTicket.Issue}' on Project '{oldTicket.Project.Name}'"
+                };
 
+                db.TicketNotifications.Add(reassignNotification);
+                db.SaveChanges();
+            }
         }
     }
 }

@@ -72,7 +72,7 @@ namespace AV_BugTracker.Controllers
 
                     var fileName = FileStamp.MakeUnique(file.FileName);
                     var serverFolder = WebConfigurationManager.AppSettings["DefaultAttachmentFolder"];
-                    file.SaveAs(Path.Combine(Server.MapPath("~/Avatars/"), fileName));
+                    file.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
                     ticketAttachment.FilePath = $"{serverFolder}{fileName}";
 
                     db.TicketAttachments.Add(ticketAttachment);
