@@ -1,0 +1,92 @@
+﻿@using AV_BugTracker.Models
+@model LoginViewModel
+
+@{
+	ViewBag.Title = "DemoLogin";
+	Layout = null;
+}
+
+<head>
+	<link href="~/Content/Login.css" rel="stylesheet" />
+</head>
+<div class="container">
+	<div class="login">
+		<div class="container">
+			<h1>Using these demo logins you are able to see how this application functions for the various roles within a business accessing a ticketing system.</h1>
+			<br />
+			<br />
+			<br />
+		</div>
+	</div>
+	<div class="register">
+		<div class="container">
+			<i class="fas fa-user-plus fa-5x"></i>
+			<h2></h2>
+			<h3></h3>
+			<br />
+			<br />
+			@using (Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+			{
+				@Html.AntiForgeryToken();
+				@Html.Hidden("emailKey", "DAE");
+				<div>
+					<button type="submit" class="btn btn-primary">Login as an Admin</button>
+				</div>
+			}
+
+			<br />
+			<br />
+			<br />
+
+			@using (Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+			{
+				@Html.AntiForgeryToken();
+				@Html.Hidden("emailKey", "DPME");
+				<div>
+					<button type="submit" class="btn btn-primary">Login as a Project Manager</button>
+				</div>
+			}
+
+			<br />
+			<br />
+			<br />
+
+			@using (Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+			{
+				@Html.AntiForgeryToken();
+				@Html.Hidden("emailKey", "DDE");
+				<div>
+					<button type="submit" class="btn btn-primary">Login as a Developer</button>
+				</div>
+			}
+
+			<br />
+			<br />
+			<br />
+
+			@using (Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+			{
+				@Html.AntiForgeryToken();
+				@Html.Hidden("emailKey", "DSE");
+				<div>
+					<button type="submit" class="btn btn-primary">Login as a Submitter</button>
+				</div>
+			}
+			<br />
+			<br />
+			<hr />
+			<br />
+			<br />
+			<button class="link">
+				@Html.ActionLink("Login with an active account", "Login")
+			</button>
+			<br />
+			<br />
+			<br />
+			<br />
+			<button class="link">
+				@Html.ActionLink("Register as a new user", "Register")
+			</button>
+		</div>
+	</div>
+</div>

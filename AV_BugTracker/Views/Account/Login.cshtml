@@ -2,64 +2,89 @@
 @model LoginViewModel
 @{
 	ViewBag.Title = "Log in";
+	Layout = null;
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-	<div class="col-md-8">
-		<section id="loginForm">
+
+<head>
+	<link href="~/Content/Login.css" rel="stylesheet" />
+</head>
+
+
+<div class="container">
+	<div class="login">
+		<div class="container">
+			<br />
+			<br />
+			<h1>Log in</h1>
 			@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 			{
 				@Html.AntiForgeryToken()
-				<h4>Use a local account to log in.</h4>
-				<hr />
 				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 				<div class="form-group">
 					@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-					<div class="col-md-10">
-						@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+					<div class="col">
+						@Html.EditorFor(m => m.Email, new { @class = "form-control" })
 						@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
 					</div>
 				</div>
+				<br />
 				<div class="form-group">
 					@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-					<div class="col-md-10">
+					<div class="col">
 						@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
 						@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-10">
+					<div class="col">
 						<div class="checkbox">
 							@Html.CheckBoxFor(m => m.RememberMe)
 							@Html.LabelFor(m => m.RememberMe)
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<div class="col-md-offset-2 col-md-10">
-						<input type="submit" value="Log in" class="btn btn-default" />
-					</div>
-				</div>
-				<p>
-					@Html.ActionLink("Register as a new user", "Register")
-				</p>
-				<p>
-					@Html.ActionLink("Forgot your password?", "ForgotPassword")
-				</p>
-				<p>
-					@Html.ActionLink("Resend Email Confirmation", "ResendEmailConfirmation")
-				</p>
+				<button type="submit" class="col-md-offset-2 col-md-10">
+					Log In
+				</button>
 			}
-		</section>
+			<p>
+				@Html.ActionLink("Register as a new user", "Register")
+			</p>
+			<br />
+			<p>
+				@Html.ActionLink("Forgot your password?", "ForgotPassword")
+			</p>
+			<br />
+			<p>
+				@Html.ActionLink("Resend Email Confirmation", "ResendEmailConfirmation")
+			</p>
+			<br />
+			<hr><p>Or Connect With</p><hr>
+			<ul>
+				<li><i class="fab fa-facebook-f fa-2x"></i></li>
+				<li><i class="fab fa-twitter fa-2x"></i></li>
+				<li><i class="fab fa-github fa-2x"></i></li>
+				<li><i class="fab fa-linkedin-in fa-2x"></i></li>
+			</ul>
+			<div class="clearfix"></div>
+			<span class="copyright">&copy;2020 Angelica Velez</span>
+		</div>
 	</div>
-	<div class="col-md-4">
-		<section id="socialLoginForm">
-			@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-		</section>
+	<div class="register">
+		<div class="container">
+			<i class="fas fa-user-plus fa-5x"></i>
+			<h2>New To This Application?</h2>
+			<br />
+			<h3>You can create an account or <br /> test the application with a demo user login!</h3>
+			<br />
+			<br />
+			<button class="link">@Html.ActionLink("Register as a new user", "Register")</button>
+			<br />
+			<br />
+			<br />
+			<button class="link">@Html.ActionLink("Demo User Logins", "DemoLogin")</button>
+		</div>
 	</div>
 </div>
 
-@section Scripts {
-	@Scripts.Render("~/bundles/jqueryval")
-}

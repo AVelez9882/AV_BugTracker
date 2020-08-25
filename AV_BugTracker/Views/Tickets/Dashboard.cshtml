@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNet.Identity;
+﻿  @using Microsoft.AspNet.Identity;
 @using AV_BugTracker.Helpers;
 @model AV_BugTracker.Models.Ticket
 
@@ -48,7 +48,7 @@
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.SubmitterId)
+			@Html.DisplayFor(model => model.Submitter.FullName)
 		</dd>
 
 		<dt>
@@ -56,7 +56,7 @@
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.DeveloperId)
+			@Html.DisplayFor(model => model.Developer.FullName)
 		</dd>
 
 		<dt>
@@ -258,7 +258,47 @@
 	</div>
 	<div class="row">
 		<div class="col">
+			<table class="table">
+				<tr>
+					<th>
+						Changed By 
+					</th>
+					<th>
+						Property 
+					</th>
+					<th>
+						Old Value 
+					</th>
+					<th>
+						New Value 
+					</th>
+					<th>
+						Changed On 
+					</th>
+				</tr>
 
+				@foreach (var item in Model.Histories)
+				{
+					<tr>
+						<td>
+							@Html.DisplayFor(modelItem => item.User.FirstName)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Property)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.OldValue)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.NewValue)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.ChangedOn)
+						</td>
+					</tr>
+				}
+
+			</table>
 		</div>
 	</div>
 </div>

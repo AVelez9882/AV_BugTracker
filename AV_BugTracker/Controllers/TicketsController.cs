@@ -162,7 +162,7 @@ namespace AV_BugTracker.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
-            ViewBag.DeveloperId = new SelectList(db.Users, "Id", "LastName", ticket.DeveloperId);
+            ViewBag.DeveloperId = new SelectList(projectHelper.ListUsersonProjectInRole(ticket.ProjectId, "Developer"), "Id", "LastName", ticket.DeveloperId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
@@ -174,28 +174,26 @@ namespace AV_BugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ProjectId,TicketPriorityId,TicketStatusId,TicketTypeId,SubmitterId,DeveloperId,Issue,IssueDescription,Created,Updated,IsResolved,IsArchived")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "Id,ProjectId,TicketPriorityId,TicketStatusId,TicketTypeId,SubmitterId,DeveloperId,Issue,IssueDescription,Created,IsResolved,IsArchived")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
-                var thisTicket = db.Tickets.Find(ticket.Id);
-                thisTicket.ProjectId = ticket.ProjectId;
-                //go out and get an unedited copy of the ticket from the DB, as no tracking allows me 
-                //to store it in the variable without loading it to the database 
-                var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
-
-                //db.Entry(ticket).State = EntityState.Modified;  first two lines of code replace this so changes are maintained in the db/sql
+				//go out and get an unedited copy of the ticket from the DB, as no tracking allows me 
+				//to store it in the variable without loading it to the database 
+				var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+                ticket.Updated = DateTime.Now;
+                db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
 
-                //somehow compare the old ticket with the new ticket to make any number
-                //of decisions that might be required 
-                var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+				//somehow compare the old ticket with the new ticket to make any number
+				//of decisions that might be required 
+				var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
                 ticketManager.ManageTicketNotifications(oldTicket, newTicket);
                 historyHelper.ManageHistories(oldTicket, newTicket);
 
                 return RedirectToAction("Index");
             }
-            ViewBag.DeveloperId = new SelectList(db.Users, "Id", "LastName", ticket.DeveloperId);
+            ViewBag.DeveloperId = new SelectList(db.Users, "Id", "Name", ticket.DeveloperId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);

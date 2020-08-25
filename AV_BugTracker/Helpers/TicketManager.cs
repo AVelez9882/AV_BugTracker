@@ -39,7 +39,7 @@ namespace AV_BugTracker.Helpers
         public void ManageTicketNotifications(Ticket oldTicket, Ticket newTicket)
         {
             //scenario 1: a new assignment, oldTicket.DeveloperId = null newTicket.DeveloperId is not
-            if (oldTicket.DeveloperId != newTicket.DeveloperId && newTicket.DeveloperId != null)
+            if (oldTicket.DeveloperId == null && newTicket.DeveloperId != null)
             {
                 var newNotification = new TicketNotification()
                 {
@@ -88,5 +88,22 @@ namespace AV_BugTracker.Helpers
                 db.SaveChanges();
             }
         }
-    }
+
+
+        //            //if comment count +1 send an alert to developer on ticket 
+        //    if (oldTicket.Comments.Count != 0 && newTicket.Comments.Count != oldTicket.Comments.Count)
+        //    {
+        //        var commentNotification = new TicketNotification()
+        //        {
+        //            TicketId = oldTicket.Id,
+        //            UserId = oldTicket.DeveloperId,
+        //            Created = DateTime.Now,
+        //            Subject = $"New comment on Ticket Id: {oldTicket.Id}",
+        //            Body = $"Heads up, {oldTicket.Developer.FirstName}, there is a new comment on Ticket Id: {oldTicket.Id} titled '{oldTicket.Issue}' on Project '{oldTicket.Project.Name}'"
+        //        };
+
+        //db.TicketNotifications.Add(commentNotification);
+        //        db.SaveChanges();
+        //    }
+}
 }

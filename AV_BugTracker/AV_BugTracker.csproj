@@ -211,16 +211,16 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\animate.css" />
+    <Content Include="Avatars\default_avatar.png" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\chartist.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\color-1.css" />
     <Content Include="Content\feather-icon.css" />
     <Content Include="Content\flag-icon.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\icofont.css" />
-    <Content Include="Content\owlcarousel.css" />
-    <Content Include="Content\prism.css" />
+    <Content Include="Content\jquery.dataTables.min.css" />
+    <Content Include="Content\Login.css" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\themify.css" />
@@ -228,29 +228,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\default_avatar.png" />
+    <Content Include="Images\login.jpg" />
     <Content Include="Private.config" />
-    <Content Include="Scripts\apex-chart.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\chartist-plugin-tooltip.js" />
-    <Content Include="Scripts\chartist.js" />
-    <Content Include="Scripts\clipboard.min.js" />
     <Content Include="Scripts\config.js" />
-    <Content Include="Scripts\counter-custom.js" />
-    <Content Include="Scripts\custom-card.js" />
-    <Content Include="Scripts\customizer.js" />
-    <Content Include="Scripts\dashboard_2.js" />
     <Content Include="Scripts\feather-icon.js" />
     <Content Include="Scripts\feather.min.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
-    <Content Include="Scripts\jquery.counterup.min.js" />
-    <Content Include="Scripts\jquery.waypoints.min.js" />
-    <Content Include="Scripts\owl.carousel.js" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\prism.min.js" />
     <Content Include="Scripts\script.js" />
     <Content Include="Scripts\sidebar-menu.js" />
-    <Content Include="Scripts\stock-prices.js" />
-    <Content Include="Scripts\tooltip-init.js" />
     <Content Include="Uploads\blogpost3637336084653496993.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -336,7 +325,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Avatars\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -344,6 +332,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\AVBugTracker - Web Deploy.pubxml" />
+    <Content Include="Views\Account\DemoLogin.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
