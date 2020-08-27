@@ -212,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Avatars\default_avatar.png" />
+    <Content Include="Content\all.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\chartist.css" />
@@ -235,6 +236,7 @@
     <Content Include="Global.asax" />
     <Content Include="Images\default_avatar.png" />
     <Content Include="Images\login.jpg" />
+    <Content Include="Images\logo.png" />
     <Content Include="Private.config" />
     <Content Include="Scripts\apex-chart.js" />
     <Content Include="Scripts\bootstrap.js" />

@@ -278,11 +278,11 @@ namespace AV_BugTracker.Migrations
 			#region Project Seed 
 			context.Projects.AddOrUpdate(
 				p => p.Name,
-				new Project() { Name = "Seed 1", Created = DateTime.Now.AddDays(-60), IsArchived = true },
-				new Project() { Name = "Seed 2", Created = DateTime.Now.AddDays(-45) },
-				new Project() { Name = "Seed 3", Created = DateTime.Now.AddDays(-30) },
-				new Project() { Name = "Seed 4", Created = DateTime.Now.AddDays(-15) },
-				new Project() { Name = "Seed 5", Created = DateTime.Now.AddDays(-7) }
+				new Project() { Name = "Seed 1", Description = "This is Seed 1 Project", Created = DateTime.Now.AddDays(-60), IsArchived = true },
+				new Project() { Name = "Seed 2", Description = "This is Seed 2 Project", Created = DateTime.Now.AddDays(-45) },
+				new Project() { Name = "Seed 3", Description = "This is Seed 3 Project", Created = DateTime.Now.AddDays(-30) },
+				new Project() { Name = "Seed 4", Description = "This is Seed 4 Project", Created = DateTime.Now.AddDays(-15) },
+				new Project() { Name = "Seed 5", Description = "This is Seed 5 Project", Created = DateTime.Now.AddDays(-7) }
 			);
 			#endregion
 

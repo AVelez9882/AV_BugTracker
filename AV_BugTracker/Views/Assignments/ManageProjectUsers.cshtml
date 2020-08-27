@@ -4,29 +4,36 @@
 
 @{
 	ViewBag.Title = "ManageProjectUsers";
-	var projectHelper = new ProjectHelper(); 
+	var projectHelper = new ProjectHelper();
 }
 
-<h2>Manage Project Users</h2>
+<h2 class="text-center">Manage Project Users</h2>
 
 
 @using (Html.BeginForm())
 {
 	@Html.AntiForgeryToken()
-	<div class="row">
-		<div class="col-6">
-			<h2>Select Users</h2>
-			@Html.ListBox("UserIds")
-		</div>
-		<div class="col-6">
-			<h2>Select Project</h2>
-			@Html.ListBox("ProjectIds")
+	<div class="container">
+		<div class="col table-responsive btn-gradient card bg-primary btn-air-primary">
+			<div class="row">
+				<div class="col-6">
+					<h2>Select Users</h2>
+					@Html.ListBox("UserIds")
+				</div>
+				<div class="col-6">
+					<h2>Select Project</h2>
+					@Html.ListBox("ProjectIds")
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-12">
-			<button type="submit">Assign Users</button>
+	<br />
+	<div class="container">
+		<div class="row">
+			<div class="col text-center">
+				<button class="btn width btn-gradient btn-air-primary" type="submit">Assign Users</button>
+			</div>
 		</div>
 	</div>
 }
@@ -36,10 +43,10 @@
 <table class="table">
 	<tr>
 		<th>
-			@Html.DisplayName("Users")
+			@Html.DisplayName("User")
 		</th>
 		<th>
-			@Html.DisplayName("Project")
+			@Html.DisplayName("Assigned Projects")
 		</th>
 	</tr>
 
@@ -59,3 +66,4 @@
 	}
 
 </table>
+

@@ -1,48 +1,72 @@
 ﻿@model IEnumerable<AV_BugTracker.Models.Project>
 
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="text-center">Projects</h2>
 
 @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+	<button class="btn-gradient btn-air-primary"><a class="text" href=@Url.Action("Create", "Projects")>Create New</a></button>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsArchived)
-        </th>
-        <th></th>
-    </tr>
+<br />
+<br />
+@if (Model.Count() == 0)
+{
+	<h3>You have no projects to display</h3>
+}
+else
+{
+	<div class="row">
+		<div class="col table-responsive btn-gradient card bg-primary btn-air-primary">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							@Html.DisplayNameFor(model => model.Name)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.Created)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.IsArchived)
+						</th>
+						<th></th>
+					</tr>
+				</thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsArchived)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>
+								@Html.DisplayFor(modelItem => item.Name)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Created)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.IsArchived)
+							</td>
+							<td>
+								@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+								@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+								@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+							</td>
+						</tr>
+					}
+				</tbody>
+
+			</table>
+		</div>
+	</div>
 }
 
-</table>
+@section Scripts
+{
+	<script>
+		$('.table').DataTable();
+	</script>
+}
+

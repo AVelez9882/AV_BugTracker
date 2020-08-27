@@ -1,41 +1,55 @@
 ﻿@model AV_BugTracker.Models.Project
 
 @{
-    ViewBag.Title = "Details";
+	ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
 <div>
-    <h4>Project</h4>
-    This project has @Model.Tickets.Count tickets
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+	<h2 class="text-center">Project Details</h2>
+	<p class="text-center">This project has @Model.Tickets.Count tickets</p>
+	<hr />
+	<div class="container">
+		<div class="row">
+			<div class="col table table-responsive btn-gradient card bg-primary btn-air-primary">
+				<table class="table table-responsive">
+					<tr>
+						<th>
+							@Html.DisplayNameFor(model => model.Name)
+						</th>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+						<th>
+							@Html.DisplayNameFor(model => model.Created)
+						</th>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
+						<th>
+							@Html.DisplayNameFor(model => model.Description)
+						</th>
 
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
+						<th>
+							@Html.DisplayNameFor(model => model.IsArchived)
+						</th>
+					</tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsArchived)
-        </dt>
+					<td>
+						@Html.DisplayFor(model => model.Name)
+					</td>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsArchived)
-        </dd>
+					<td>
+						@Html.DisplayFor(model => model.Created)
+					</td>
 
-    </dl>
+					<td>
+						@Html.DisplayFor(model => model.Description)
+					</td>
+
+					<td>
+						@Html.DisplayFor(model => model.IsArchived)
+					</td>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 <hr />
 
@@ -44,55 +58,82 @@
 	using (Html.BeginForm("Create", "Tickets", FormMethod.Post))
 	{
 		@Html.AntiForgeryToken()
-
-	    <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.Hidden("ProjectId", Model.Id)
-            @Html.Hidden("OnPage", true)
-
-
-            <div class="form-group">
-                @Html.Label("Ticket Priority", "TicketPriorityId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("TicketPriorityId", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Ticket Type", "TicketTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("TicketTypeId", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Issue", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.Editor("Issue", new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Issue Description", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextArea("IssueDescription", new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
+		<div class="container">
+			<div class="row">
+				<div class="col table-responsive btn-gradient card bg-primary btn-air-primary">
+					<h2 class="text-center">Create Ticket</h2>
+					<div class="form-horizontal">
+						<hr />
+						@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+						@Html.Hidden("ProjectId", Model.Id)
+						@Html.Hidden("OnPage", true)
 
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type = "submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
-    }
+						<div class="form-group text-center">
+							@Html.Label("Ticket Priority", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col">
+								@Html.DropDownList("TicketPriorityId", null, htmlAttributes: new { @class = "form-control" })
+							</div>
+						</div>
+
+						<div class="form-group text-center">
+							@Html.Label("Ticket Type", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col">
+								@Html.DropDownList("TicketTypeId", null, htmlAttributes: new { @class = "form-control" })
+							</div>
+						</div>
+
+						<div class="form-group text-center">
+							@Html.Label("Issue", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col">
+								@Html.Editor("Issue", new { htmlAttributes = new { @class = "form-control" } })
+							</div>
+						</div>
+
+						<div class="form-group text-center">
+							@Html.Label("Issue Description", htmlAttributes: new { @class = "control-label col-md-2" })
+							<div class="col">
+								@Html.TextArea("IssueDescription", new { htmlAttributes = new { @class = "form-control" } })
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-10">
+								<input type="submit" value="Create" class="btn btn-default" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="div">
+						<div class="text-center">
+							<input type="submit" value="Create Ticket" class="btn width btn-gradient btn-air-primary" />
+						</div>
+						<br />
+						<div class="text-center">
+							<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("Index", "Tickets")>Back to Tickets List</a></button>
+						</div>
+						<br />
+						<div class="text-center">
+							<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("Index", "Projects")>Back to Projects List</a></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br />
+		<br />
+	}
 }
 
 
 <hr />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+	@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+	@Html.ActionLink("Back to List", "Index")
 </p>

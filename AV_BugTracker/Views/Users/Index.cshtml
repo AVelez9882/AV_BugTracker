@@ -1,39 +1,81 @@
-﻿     @using AV_BugTracker.Models;
+﻿@using AV_BugTracker.Models;
 @model IEnumerable<ApplicationUser>
 
 
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="text-center">All Users</h2>
+@if (User.IsInRole("ProjectManager") || User.IsInRole("Admin"))
+{
+	<button class="btn btn-gradient btn-air-primary"><a href=@Url.Action("Register", "Account")>Register a New User</a></button>
+}
+<br />
+<br />
 
-<table class="table">
-	<tr>
-		<th>
-			@Html.DisplayName("Full Name")
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.Email)
-		</th>
-		<th></th>
-	</tr>
+<div class="row">
+	<div class="col table-responsive btn-gradient card bg-primary btn-air-primary">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						@Html.DisplayName("Full Name")
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Email)
+					</th>
+					<th></th>
+				</tr>
+			</thead>
 
-	@foreach (var user in Model)
-	{
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => user.FullName)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => user.Email)
-			</td>
-			<td>
-				@Html.ActionLink("Manage Role", "ManageUserRole", "Users", new { id = user.Id }, null) |
-				@Html.ActionLink("Manage Projects", "ManageUserProjects", "Assignments", new { id = user.Id }, null)
+			<tbody>
+				@foreach (var user in Model)
+				{
+					<tr>
+						<td>
+							@Html.DisplayFor(modelItem => user.FullName)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => user.Email)
+						</td>
+						@if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+						{
+							<td>
+								@Html.ActionLink("Manage Role", "ManageUserRole", "Users", new { id = user.Id }, null) |
+								@Html.ActionLink("Manage Projects", "ManageUserProjects", "Assignments", new { id = user.Id }, null)
+							</td>
+						}
+					</tr>
+				}
+			</tbody>
 
-			</td>
-		</tr>
-	}
+		</table>
+	</div>
+</div>
 
-</table>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<div class="div">
+				<div class="text-center">
+					<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("ManageRoles", "Assignments")>Manage All User Roles</a></button>
+				</div>
+				<br />
+				<div class="text-center">
+					<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("ManageProjectUsers", "Assignments")>Manage Users for All Projects</a></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br />
+<br />
+
+
+@section Scripts
+{
+	<script>
+		$('.table').DataTable();
+	</script>
+}

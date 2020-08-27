@@ -10,30 +10,34 @@
 
 
 
-<h2>Manage Roles</h2>
+<h2 class="text-center">Manage Roles</h2>
 
 
 @using (Html.BeginForm())
 {
 	@Html.AntiForgeryToken()
+	<div class="container">
+		<div class="row">
+			<div class="col table-responsive btn-gradient card bg-primary btn-air-primary">
+				<div class="form-group text-center">
+					@Html.Label("Registered Users", htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col">
+						@Html.ListBox("UserIds")
+					</div>
+				</div>
 
-	<div class="form-group">
-		@Html.Label("Registered Users", htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.ListBox("UserIds")
+				<div class="form-group text-center">
+					@Html.Label("System Roles", htmlAttributes: new { @class = "control-label col-md-2" })
+					<div class="col">
+						@Html.DropDownList("RoleName", "-- no role --")
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-
-	<div class="form-group">
-		@Html.Label("System Roles", htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.DropDownList("RoleName", "-- no role --")
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<button type="submit" class="btn btn-primary">Manage Role Assignment(s)</button>
+		<div class="row">
+			<div class="col">
+				<button type="submit" class="width btn btn-primary">Manage Role Assignment(s)</button>
+			</div>
 		</div>
 	</div>
 }
