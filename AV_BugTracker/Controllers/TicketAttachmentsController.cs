@@ -19,6 +19,8 @@ namespace AV_BugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private FileUploadValidator fileUploadValidator = new FileUploadValidator();
         private FileStamp fileStamp = new FileStamp();
+        private TicketManager ticketManager = new TicketManager();
+
 
         // GET: TicketAttachments
         public ActionResult Index()
@@ -77,6 +79,11 @@ namespace AV_BugTracker.Controllers
 
                     db.TicketAttachments.Add(ticketAttachment);
                     db.SaveChanges();
+                    var ticket = db.Tickets.Find(ticketAttachment.TicketId);
+                    if (ticket.DeveloperId != User.Identity.GetUserId())
+                    {
+                        ticketManager.AttachmentNotifications(ticket);
+                    };
 
                 }
 

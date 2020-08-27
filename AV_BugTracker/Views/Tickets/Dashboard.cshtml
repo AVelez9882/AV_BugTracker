@@ -14,7 +14,7 @@
 
 
 
-@*<div>
+<div>
 	<h4>Ticket Dashboard</h4>
 	<hr />
 	<table>
@@ -275,57 +275,57 @@
 				</div>
 			</div>
 		</div>
-	<div class="row">
-		<div class="col">
-			<table class="table">
-				<tr>
-					<th>
-						Changed By
-					</th>
-					<th>
-						Property
-					</th>
-					<th>
-						Old Value
-					</th>
-					<th>
-						New Value
-					</th>
-					<th>
-						Changed On
-					</th>
-				</tr>
-
-				@foreach (var item in Model.Histories)
-				{
+		<div class="row">
+			<div class="col">
+				<table class="table">
 					<tr>
-						<td>
-							@Html.DisplayFor(modelItem => item.User.FirstName)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.Property)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.OldValue)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.NewValue)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.ChangedOn)
-						</td>
+						<th>
+							Changed By
+						</th>
+						<th>
+							Property
+						</th>
+						<th>
+							Old Value
+						</th>
+						<th>
+							New Value
+						</th>
+						<th>
+							Changed On
+						</th>
 					</tr>
-				}
 
-			</table>
+					@foreach (var item in Model.Histories)
+					{
+						<tr>
+							<td>
+								@Html.DisplayFor(modelItem => item.User.FirstName)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Property)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.OldValue)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.NewValue)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.ChangedOn)
+							</td>
+						</tr>
+					}
+
+				</table>
+			</div>
 		</div>
 	</div>
-</div>
 
 
-@section Scripts
+	@section Scripts
 {
-	<script>
-		$('.table').DataTable();
-	</script>
-}*@
+		<script>
+			$('.table').DataTable();
+		</script>
+	}
