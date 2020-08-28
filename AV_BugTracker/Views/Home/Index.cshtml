@@ -1,187 +1,104 @@
 ﻿@model AV_BugTracker.Models.ApplicationUser
 
-@if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("Project Manager") || User.IsInRole("DemoPM"))
-{
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col">
-				<div class="info-box">
-					<!-- Apply any bg-* class to to the icon to color it -->
-					<span class="info-box-icon bg-red"><i class="fas fa-fire"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">High Priority Tickets</span>
-						<span class="info-box-number">High Priority ticket count</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-			</div>
-			<div class="col">
-				<!-- /.info-box -->
-				<div class="info-box">
-					<!-- Apply any bg-* class to to the icon to color it -->
-					<span class="info-box-icon bg-orange"><i class="fas fa-exclamation-triangle"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Unassigned Tickets</span>
-						<span class="info-box-number">Unassigned ticket count</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-			</div>
-			<div class="col">
-				<!-- /.info-box -->
-				<div class="info-box">
-					<!-- Apply any bg-* class to to the icon to color it -->
-					<span class="info-box-icon bg-green"><i class="fas fa-check"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Resolved Tickets Last 7 days</span>
-						<span class="info-box-number">Recent Resolved Count</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-				<!-- /.info-box -->
-			</div>
-		</div>
-	</div>
-}
-@if (User.IsInRole("Developer") || User.IsInRole("DemoDeveloper"))
-{
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col">
-				<div class="info-box">
-					<!-- Apply any bg-* class to to the icon to color it -->
-					<span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Active Projects</span>
-						<span class="info-box-number">assigned project count</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-			</div>
-			<div class="col">
-				<!-- /.info-box -->
-				<div class="info-box">
-					<!-- Apply any bg-* class to to the icon to color it -->
-					<span class="info-box-icon bg-orange"><i class="fas fa-tag"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Assigned Tickets</span>
-						<span class="info-box-number">assigned ticket count</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-			</div>
-			<div class="col">
-				<!-- /.info-box -->
-				<div class="info-box">
-					<!-- Apply any bg-* class to to the icon to color it -->
-					<span class="info-box-icon bg-red"><i class="fas fa-exclamation-circle"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">High Priority Tickets</span>
-						<span class="info-box-number">high priority ticket count</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-				<!-- /.info-box -->
-			</div>
-		</div>
-	</div>
-}
-@if (User.IsInRole("Submitter") || User.IsInRole("DemoSubmitter"))
-{
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col">
-				<div class="info-box">
-					<!-- Apply any bg-* class to to the icon to color it -->
-					<span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Active Projects</span>
-						<span class="info-box-number">assigned project count</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-			</div>
-			<div class="col">
-				<!-- /.info-box -->
-				<div class="info-box">
-					<!-- Apply any bg-* class to to the icon to color it -->
-					<span class="info-box-icon bg-green"><i class="fas fa-tag"></i></span>
-					<div class="info-box-content">
-						<span class="info-box-text">Submitted Tickets</span>
-						<span class="info-box-number">submitted ticket count</span>
-					</div>
-					<!-- /.info-box-content -->
-				</div>
-			</div>
-		</div>
-	</div>
-}
+<head>
+	<link href="~/Content/morris.css" rel="stylesheet" />
+
+	<style>
+		.chart {
+			height: 250px;
+		}
+	</style>
+</head>
 
 
 <div class="container-fluid">
 	<div class="row">
 		<div class="col">
 			<h4>Tickets By Priority</h4>
-			<div id="chart1">
+			<div id="priorityChart">
 
 			</div>
 		</div>
 		<div class="col">
 			<h4>Tickets By Status</h4>
-			<div id="chart2">
+			<div id="statusChart">
 
 			</div>
 		</div>
 		<div class="col">
 			<h4>Tickets By Type</h4>
-			<div id="chart3">
+			<div id="typeChart">
 
 			</div>
 		</div>
 	</div>
 </div>
-<script>
-        $(function () {
-            var url = '@Url.Action("ProduceChart1Data", "Graphing")';
-            $.post(url).then(function (response) {
-                new Morris.Bar({
-                    element: 'chart1',
-                    data: response,
-                    xkey: 'label',
-                    ykeys: ['value'],
-                    labels: ['Ticket Count'],
-                    resize: true
-                });
-            })
-            var url = '@Url.Action("ProduceChart2Data", "Graphing")';
-            $.post(url).then(function (response) {
-                new Morris.Donut({
-                    element: 'chart2',
-                    data: response,
-                    xkey: 'label',
-                    ykeys: ['value'],
-                    labels: ['Ticket Count'],
-                    resize: true
-                });
-            })
-            var url = '@Url.Action("ProduceChart3Data", "Graphing")';
-            $.post(url).then(function (response) {
-                new Morris.Donut({
-                    element: 'chart3',
-                    data: response,
-                    xkey: 'label',
-                    ykeys: ['value'],
-                    labels: ['Ticket Count'],
-                    resize: true
-                });
-            })
-        })
-</script>
 @section scripts{
 	<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="~/Scripts/morris.min.js"></script>
 	<script>
-        $(document).ready(function () {
-            $('table').DataTable();
-        });
+		$(document).ready(function () {
+			$('table').DataTable();
+		});
+	</script>
+
+	<script>
+		var url = '@Url.Action("GetAllTicketPriorityData","MorrisCharts")'
+		$.ajax({
+			type: 'POST',
+			contentType: "application/json; charset=utf-8",
+			url: url,
+			success: function (response) {
+				new Morris.Bar({
+					element: 'priorityChart',
+					data: response,
+					xkey: 'Label',
+					ykeys: ['Value'],
+					labels: ['Value']
+				});
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				alert('bad, ' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
+			},
+		});
+
+		var url = '@Url.Action("GetAllTicketStatusData","MorrisCharts")'
+		$.ajax({
+			type: 'POST',
+			contentType: "application/json; charset=utf-8",
+			url: url,
+			success: function (response) {
+				new Morris.Bar({
+					element: 'statusChart',
+					data: response,
+					xkey: 'Label',
+					ykeys: ['Value'],
+					labels: ['Value']
+				});
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				alert('bad, ' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
+			},
+		});
+
+		var url = '@Url.Action("GetAllTicketTypeData","MorrisCharts")'
+		$.ajax({
+			type: 'POST',
+			contentType: "application/json; charset=utf-8",
+			url: url,
+			success: function (response) {
+				new Morris.Bar({
+					element: 'typeChart',
+					data: response,
+					xkey: 'Label',
+					ykeys: ['Value'],
+					labels: ['Value']
+				});
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				alert('bad, ' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
+			},
+		});
 	</script>
 }

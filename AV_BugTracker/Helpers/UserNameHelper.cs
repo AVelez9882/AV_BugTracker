@@ -18,6 +18,13 @@ namespace AV_BugTracker.Helpers
 			return firstName + "" + lastName;
 		}
 
+		public string GetFirstName(string userId)
+		{
+			var user = db.Users.Find(userId);
+			var firstName = user.FirstName;
+			return firstName;
+		}
+
 		public string LastNameFirst(string userId)
 		{
 			var user = db.Users.Find(userId);
