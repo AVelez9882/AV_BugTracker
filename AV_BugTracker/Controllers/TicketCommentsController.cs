@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AV_BugTracker.Helpers;
@@ -19,6 +20,7 @@ namespace AV_BugTracker.Controllers
         private TicketManager ticketManager = new TicketManager();
 
         // GET: TicketComments
+        [Authorize]
         public ActionResult Index()
         {
             var ticketComments = db.TicketComments.Include(t => t.Ticket).Include(t => t.User);
@@ -26,6 +28,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: TicketComments/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,6 +44,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: TicketComments/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId");
@@ -53,7 +57,7 @@ namespace AV_BugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,Comment")] TicketComment ticketComment)
+        public async  Task<ActionResult> Create([Bind(Include = "Id,TicketId,Comment")] TicketComment ticketComment)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +69,7 @@ namespace AV_BugTracker.Controllers
                 var ticket = db.Tickets.Find(ticketComment.TicketId);
                 if (ticket.DeveloperId != User.Identity.GetUserId())
                 {
-                    ticketManager.CommentNotifications(ticket);
+                    await ticketManager.CommentNotifications(ticket);
                 };
                 return RedirectToAction("Dashboard", "Tickets", new { id = ticketComment.TicketId});
             }
@@ -75,8 +79,9 @@ namespace AV_BugTracker.Controllers
             return View(ticketComment);
         }
 
-        [Authorize(Roles = "Admin")]
+
         // GET: TicketComments/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -112,8 +117,8 @@ namespace AV_BugTracker.Controllers
             return View(ticketComment);
         }
 
-        [Authorize(Roles = "Admin")]
         // GET: TicketComments/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -187,6 +187,7 @@
     <Compile Include="Helpers\FileStamp.cs" />
     <Compile Include="Helpers\FileUploadValidator.cs" />
     <Compile Include="Helpers\HistoryHelper.cs" />
+    <Compile Include="Helpers\IconHelper.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
     <Compile Include="Helpers\SlugMaker.cs" />
     <Compile Include="Helpers\StringUtilities.cs" />
@@ -211,8 +212,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\MorrisChartData.cs" />
+    <Compile Include="ViewModels\ProjectViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Avatars\blogpost3637336071034444147.jpg" />
     <Content Include="Avatars\default_avatar.png" />
     <Content Include="Content\all.css" />
     <Content Include="Content\animate.css" />
@@ -235,11 +238,25 @@
     <Content Include="Content\sweetalert2.css" />
     <Content Include="Content\themify.css" />
     <Content Include="favicon.ico" />
+    <Content Include="favicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\bmp.png" />
+    <Content Include="Images\default.png" />
     <Content Include="Images\default_avatar.png" />
+    <Content Include="Images\doc.png" />
+    <Content Include="Images\docx.png" />
+    <Content Include="Images\gif.png" />
+    <Content Include="Images\jpeg.png" />
+    <Content Include="Images\jpg.png" />
     <Content Include="Images\login.jpg" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\pdf.png" />
+    <Content Include="Images\png.png" />
+    <Content Include="Images\tiff.png" />
+    <Content Include="Images\txt.png" />
+    <Content Include="Images\xls.png" />
+    <Content Include="Images\xlsx.png" />
     <Content Include="Private.config" />
     <Content Include="Scripts\apex-chart.js" />
     <Content Include="Scripts\bootstrap.js" />

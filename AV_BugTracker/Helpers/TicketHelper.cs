@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AV_BugTracker.Models;
+using AV_BugTracker.Helpers;
 using Microsoft.AspNet.Identity;
 
 namespace AV_BugTracker.Helpers
@@ -38,6 +39,7 @@ namespace AV_BugTracker.Helpers
 					return false;
 			}
 		}
+
 
 		public bool CanMakeComment(int ticketId)
 		{

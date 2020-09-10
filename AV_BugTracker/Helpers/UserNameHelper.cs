@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AV_BugTracker.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AV_BugTracker.Helpers
 {
@@ -29,6 +30,12 @@ namespace AV_BugTracker.Helpers
 		{
 			var user = db.Users.Find(userId);
 			return user.FullName;
+		}
+
+		public string GetAvatarPath()
+		{
+			var userId = HttpContext.Current.User.Identity.GetUserId();
+			return db.Users.Find(userId).AvatarPath;
 		}
 	}
 

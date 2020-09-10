@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -23,6 +24,7 @@ namespace AV_BugTracker.Controllers
 
 
         // GET: TicketAttachments
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var ticketAttachments = db.TicketAttachments.Include(t => t.Ticket).Include(t => t.User);
@@ -30,6 +32,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: TicketAttachments/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -45,6 +48,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: TicketAttachments/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId");
@@ -56,7 +60,7 @@ namespace AV_BugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TicketId,FileName")] TicketAttachment ticketAttachment, string attachmentDescription, HttpPostedFileBase file)
+        public async Task<ActionResult> Create([Bind(Include = "TicketId,FileName")] TicketAttachment ticketAttachment, string attachmentDescription, HttpPostedFileBase file)
         {
             if (file == null)
             {
@@ -82,7 +86,7 @@ namespace AV_BugTracker.Controllers
                     var ticket = db.Tickets.Find(ticketAttachment.TicketId);
                     if (ticket.DeveloperId != User.Identity.GetUserId())
                     {
-                        ticketManager.AttachmentNotifications(ticket);
+                        await ticketManager.AttachmentNotifications(ticket);
                     };
 
                 }
@@ -95,6 +99,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: TicketAttachments/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -129,6 +134,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: TicketAttachments/Delete/5
+        [Authorize (Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

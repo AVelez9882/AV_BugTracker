@@ -58,13 +58,19 @@
 	<div class="row">
 		<div class="col">
 			<div class="div">
-				<div class="text-center">
-					<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("ManageRoles", "Assignments")>Manage All User Roles</a></button>
-				</div>
-				<br />
-				<div class="text-center">
-					<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("ManageProjectUsers", "Assignments")>Manage Users for All Projects</a></button>
-				</div>
+				@if (User.IsInRole("Admin"))
+				{
+					<div class="text-center">
+						<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("ManageRoles", "Assignments")>Manage All User Roles</a></button>
+					</div>
+					<br />
+				}
+				@if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+				{
+					<div class="text-center">
+						<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("ManageProjectUsers", "Assignments")>Manage Users for All Projects</a></button>
+					</div>
+				}
 			</div>
 		</div>
 	</div>

@@ -61,14 +61,14 @@ namespace AV_BugTracker.Controllers
 			return RedirectToAction("ManageRoles");
 		}
 
+		[Authorize(Roles = "Admin")]
 		public ActionResult ManageUserRoles()
 		{
 			return View();
 		}
 
-
 		//GET: Assign Projects to Users 
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin, ProjectManager")]
 		public ActionResult ManageProjectUsers()
 		{
 			ViewBag.UserIds = new MultiSelectList(db.Users, "Id", "Email");
@@ -93,7 +93,14 @@ namespace AV_BugTracker.Controllers
 			{
 				foreach (var projectId in projectIds)
 				{
-					projectHelper.AddUserToProject(userId, projectId);
+					if (projectHelper.IsUserOnProject(userId, projectId))
+					{
+						projectHelper.RemoveUserFromProject(userId, projectId);
+					}
+					else 
+					{
+						projectHelper.AddUserToProject(userId, projectId);
+					}
 				}
 			}
 
@@ -106,7 +113,7 @@ namespace AV_BugTracker.Controllers
 
 
 		//GET
-		//[Authorize (Roles = "Admin, ProjectManager")]
+		[Authorize(Roles = "Admin, ProjectManager")]
 		public ActionResult ManageUserProjects(string Id)
 		{
 			var myProjectIds = projectHelper.ListUserProjects(Id);

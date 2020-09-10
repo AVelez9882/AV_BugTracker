@@ -7,13 +7,13 @@
 
 <div>
 	<h2 class="text-center">Project Details</h2>
-	<p class="text-center">This project has @Model.Tickets.Count tickets</p>
+	@*<p class="text-center">This project has @Model.Tickets.Count tickets</p>*@
 	<hr />
 	<div class="container">
 		<div class="row">
 			<div class="col table table-responsive btn-gradient card bg-primary btn-air-primary">
 				<table class="table table-responsive">
-					<tr>
+					<tr class="text-center width">
 						<th>
 							@Html.DisplayNameFor(model => model.Name)
 						</th>
@@ -28,6 +28,10 @@
 
 						<th>
 							@Html.DisplayNameFor(model => model.IsArchived)
+						</th>
+						<th></th>
+						<th>
+							Ticket Count 
 						</th>
 					</tr>
 
@@ -46,7 +50,33 @@
 					<td>
 						@Html.DisplayFor(model => model.IsArchived)
 					</td>
+
+					<td>
+						@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+
+						@Html.ActionLink("Back to List", "Index")
+					</td>
+					<td>
+						This project has @Model.Tickets.Count tickets
+					</td>
 				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<br />
+<br />
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<div class="div">
+				<div class="text-center">
+					<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("Index", "Projects")>Back to Projects List</a></button>
+				</div>
+				<br />
+				<div class="text-center">
+					<button class="btn btn-gradient width btn-air-primary text"><a href=@Url.Action("Index", "Tickets")>Back to Tickets List</a></button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -93,14 +123,14 @@
 						<div class="form-group text-center">
 							@Html.Label("Issue Description", htmlAttributes: new { @class = "control-label col-md-2" })
 							<div class="col">
-								@Html.TextArea("IssueDescription", new { htmlAttributes = new { @class = "form-control" } })
+								@Html.TextArea("IssueDescription", new { @cols = "80", @rows = "8", @style = "width:100%;" })
 							</div>
 						</div>
 
 
 						<div class="form-group">
-							<div class="col-md-offset-2 col-md-10">
-								<input type="submit" value="Create" class="btn btn-default" />
+							<div class="col text-center">
+								<input type="submit" value="Create" class="btn width btn-dark btn-air-primary" />
 							</div>
 						</div>
 					</div>
@@ -131,9 +161,3 @@
 	}
 }
 
-
-<hr />
-<p>
-	@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-	@Html.ActionLink("Back to List", "Index")
-</p>

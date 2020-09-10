@@ -13,11 +13,13 @@ namespace AV_BugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private UserRoleHelper roleHelper = new UserRoleHelper();
         // GET: Users
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Users.ToList());
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult ManageUserRole(string id)
         {
             var userRole = roleHelper.ListUserRoles(id).FirstOrDefault();

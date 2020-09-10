@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity,
 @using AV_BugTracker.Helpers,
-@model AV_BugTracker.Models.ApplicationUser
+
 
 @{
 	var userNameHelper = new UserNameHelper();
@@ -12,7 +12,7 @@
 	{
 		@Html.AntiForgeryToken()
 
-		<ul class="nav navbar-nav navbar-right">
+		<ul class="nav navbar-nav navbar-right text-center">
 			<li>
 				@Html.ActionLink("Hello, " + userNameHelper.GetFirstName(User.Identity.GetUserId()) + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
 			</li>
@@ -20,7 +20,7 @@
 			<li class="text-center">
 				@if (User.Identity.IsAuthenticated)
 				{
-					<img src="@Model.AvatarPath" class="b-r-10 img-100" />
+					<img src="@userNameHelper.GetAvatarPath()" class="b-r-10 img-100" />
 				}
 			</li>
 			<br />

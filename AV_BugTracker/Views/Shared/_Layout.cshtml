@@ -1,4 +1,7 @@
-﻿@model AV_BugTracker.Models.ApplicationUser
+﻿@using AV_BugTracker.Helpers
+@{
+	var userNameHelper = new UserNameHelper();
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,8 +12,8 @@
 	<meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
 	<meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
 	<meta name="author" content="pixelstrap">
-	<link rel="icon" href="~/favicon.ico" type="image/x-icon">
-	<title>AV Bug Tracker</title>
+	<link rel="icon" href="~/favicon.png" type="image/x-icon">
+	<title>BugSpot | Angelica Velez</title>
 	<!-- Google font-->
 	<link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
@@ -139,10 +142,7 @@
 							<div class="media profile-media">
 								<img class="b-r-10" src="../assets/images/dashboard/profile.jpg" alt="">
 								<div class="media-body">
-									@if (User.Identity.IsAuthenticated)
-									{
-										<img src="@Model.AvatarPath" class="img-40 img-fluid b-r-10" />
-									}
+									<img src="@userNameHelper.GetAvatarPath()" class="b-r-10 img-40" />
 								</div>
 								<ul class="profile-dropdown onhover-show-div">
 									<li><i data-feather="user"></i><span><a href=@Url.Action("Index","Manage")>Account</a></span></li>
@@ -155,13 +155,13 @@
 				<div class="d-lg-none mobile-toggle pull-right"><i data-feather="more-horizontal"></i></div>
 			</div>
 		</div>
-		<!-- Page Header Ends                              -->
+		<!-- Page Header End-->
 		<!-- Page Body Start-->
 		<div class="page-body-wrapper sidebar-icon">
 			<!-- Page Sidebar Start-->
 			<header class="main-nav bg-dark">
-				<div class="logo-icon-wrapper"><img class="img-fluid" style="width:10%; height:10%;" src="~/Images/logo.png" alt=""></div>
-				<div class="logo-wrapper"><h3>BugLight</h3></div>
+				<div class="logo-icon-wrapper"><img class="img-fluid" style="width:20%; height:20%;" src="~/Images/logo.png" alt=""></div>
+				<div class="logo-wrapper"><h2>BugSpot<img class="img-fluid" style="width:20%; height:20%;" src="~/Images/logo.png" alt=""></h2></div>
 				<nav>
 					<div class="main-navbar">
 						<div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
@@ -171,7 +171,7 @@
 									<div class="mobile-back text-right"><span>Back</span><i class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
 								</li>
 								<li>
-									<h3>@Html.Partial("_LoginPartial")</h3>
+									@Html.Partial("_LoginPartial")
 								</li>
 								<li class="text-center">
 									<button class="btn-gradient btn-air-primary" style="width:100%"><a href="@Url.Action("Index", "Home")">Home Dashboard</a></button>
@@ -188,22 +188,8 @@
 								</li>
 								<br />
 								<br />
-								<li class="text-center">
-									<button class="btn-gradient btn-air-primary" style="width:100%"><a href="@Url.Action("Index", "Users")">Users</a></button>
-								</li>
-								<br />
-								<br />
-								<li class="text-center">
-									<button class="btn-gradient btn-air-primary" style="width:100%"><a href="@Url.Action("Create", "Projects")">Create Project</a></button>
-								</li>
-								<br />
-								<br />
-								<li class="text-center">
-									<button class="btn-gradient btn-air-primary" style="width:100%"><a href="@Url.Action("Create", "Tickets")">Create Ticket</a></button>
-								</li>
 							</ul>
 						</div>
-						<div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
 					</div>
 				</nav>
 			</header>
@@ -214,7 +200,7 @@
 						<div class="row">
 							<div class="col-lg-6">
 								<h3>
-									BugLight
+									BugSpot
 								</h3>
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href=@Url.Action("Index", "Home")><i data-feather="home"></i></a></li>
@@ -235,12 +221,12 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-6 footer-copyright">
-					<p class="mb-0">Copyright 2020 © Angelica Velez All rights reserved.</p>
+					<p class="mb-0" style="color:black">Copyright 2020 © <a style="color:black" href="https://av-portfolio.netlify.app" target="_blank">Angelica Velez</a>. All rights reserved.</p>
 				</div>
 			</div>
 		</div>
 	</footer>
-	<script>
+	@*<script>
 		var map;
 		function initMap() {
 			map = new google.maps.Map(
@@ -284,8 +270,8 @@
 				});
 			};
 		}
-	</script>
-	<script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGCQvcXUsXwCdYArPXo72dLZ31WS3WQRw&amp;callback=initMap"></script>
+	</script>*@
+	@*<script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGCQvcXUsXwCdYArPXo72dLZ31WS3WQRw&amp;callback=initMap"></script>*@
 	</div>
 	</div>
 	<!-- latest jquery-->
@@ -319,7 +305,7 @@
 	<!-- Plugins JS Ends-->
 	<!-- Theme js-->
 	<script src="~/Scripts/script.js"></script>
-	<script src="~/Scripts/customizer.js"></script>
+	@*<script src="~/Scripts/customizer.js"></script>*@
 	<!-- login js-->
 	<!-- Plugin used-->
 </body>

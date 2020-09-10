@@ -6,21 +6,35 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AV_BugTracker.Helpers;
 using AV_BugTracker.Models;
+using Microsoft.AspNet.Identity;
+using AV_BugTracker.ViewModels;
+
 
 namespace AV_BugTracker.Controllers
 {
     public class ProjectsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ProjectHelper projectHelper = new ProjectHelper();
+
 
         // GET: Projects
+        [Authorize]
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+			var userId = User.Identity.GetUserId();
+			var projects = new ProjectViewModel();
+
+			projects.AllProjects = db.Projects.ToList();
+			projects.MyProjects = projectHelper.ListUserProjects(userId).ToList();
+
+			return View(projects);
         }
 
         // GET: Projects/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -96,6 +110,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: Projects/Delete/5
+        [Authorize(Roles = "Admin, ProjectManager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

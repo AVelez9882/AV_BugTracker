@@ -3,6 +3,8 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace AV_BugTracker.Helpers
@@ -10,6 +12,8 @@ namespace AV_BugTracker.Helpers
 	public class TicketManager
 	{
 		private ApplicationDbContext db = new ApplicationDbContext();
+		EmailService svc = new EmailService();
+		string from = "AV BugTracker";
 		private UserRoleHelper roleHelper = new UserRoleHelper();
 		private ProjectHelper projectHelper = new ProjectHelper();
 		public List<Ticket> GetMyTickets()
@@ -36,7 +40,7 @@ namespace AV_BugTracker.Helpers
 			return model;
 		}
 
-		public void ManageTicketNotifications(Ticket oldTicket, Ticket newTicket)
+		public async Task ManageTicketNotifications(Ticket oldTicket, Ticket newTicket)
 		{
 			//scenario 1: a new assignment, oldTicket.DeveloperId = null newTicket.DeveloperId is not
 			if (oldTicket.DeveloperId == null && newTicket.DeveloperId != null)
@@ -53,6 +57,23 @@ namespace AV_BugTracker.Helpers
 
 				db.TicketNotifications.Add(newNotification);
 				db.SaveChanges();
+
+				try
+				{
+					var email = new MailMessage(from, newNotification.User.Email)
+					{
+						Subject = "Ticket Assignment",
+						Body = newNotification.Body,
+						IsBodyHtml = true
+					};
+
+					await svc.SendAsync(email);
+				}
+				catch(Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+					await Task.FromResult(0);
+				}
 			}
 
 			//scenario 2: unassignment - oldTicket.DeveloperId = was not null, and newTicket.DeveloperId is 
@@ -69,6 +90,23 @@ namespace AV_BugTracker.Helpers
 
 				db.TicketNotifications.Add(unassignNotification);
 				db.SaveChanges();
+
+				try
+				{
+					var email = new MailMessage(from, unassignNotification.User.Email)
+					{
+						Subject = "Ticket UnAssignment",
+						Body = unassignNotification.Body,
+						IsBodyHtml = true
+					};
+
+					await svc.SendAsync(email);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+					await Task.FromResult(0);
+				}
 			}
 
 
@@ -96,13 +134,46 @@ namespace AV_BugTracker.Helpers
 				db.TicketNotifications.Add(unassignNotification);
 				db.TicketNotifications.Add(assignNotification);
 				db.SaveChanges();
+
+				try
+				{
+					var email = new MailMessage(from, unassignNotification.User.Email)
+					{
+						Subject = "Ticket UnAssignment",
+						Body = unassignNotification.Body,
+						IsBodyHtml = true
+					};
+
+					await svc.SendAsync(email);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+					await Task.FromResult(0);
+				}
+
+				try
+				{
+					var email = new MailMessage(from, assignNotification.User.Email)
+					{
+						Subject = "Ticket Assignment",
+						Body = assignNotification.Body,
+						IsBodyHtml = true
+					};
+
+					await svc.SendAsync(email);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+					await Task.FromResult(0);
+				}
 			}
 		}
 
 
-		public void AttachmentNotifications(Ticket ticket)
+		public async Task AttachmentNotifications(Ticket ticket)
 		{
-			//scenario 1: a new assignment, oldTicket.DeveloperId = null newTicket.DeveloperId is not
 			var newNotification = new TicketNotification()
 			{
 				TicketId = ticket.Id,
@@ -116,10 +187,27 @@ namespace AV_BugTracker.Helpers
 			db.TicketNotifications.Add(newNotification);
 			db.SaveChanges();
 
+			try
+			{
+				var email = new MailMessage(from, newNotification.User.Email)
+				{
+					Subject = "Ticket Attachment Added",
+					Body = newNotification.Body,
+					IsBodyHtml = true
+				};
+
+				await svc.SendAsync(email);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				await Task.FromResult(0);
+			}
+
 		}
 
 
-		public void CommentNotifications(Ticket ticket)
+		public async Task CommentNotifications(Ticket ticket)
 		{
 			//scenario 1: a new assignment, oldTicket.DeveloperId = null newTicket.DeveloperId is not
 			var newNotification = new TicketNotification()
@@ -135,6 +223,30 @@ namespace AV_BugTracker.Helpers
 			db.TicketNotifications.Add(newNotification);
 			db.SaveChanges();
 
+			try
+			{
+				var email = new MailMessage(from, newNotification.User.Email)
+				{
+					Subject = "Ticket Comment Added",
+					Body = newNotification.Body,
+					IsBodyHtml = true
+				};
+
+				await svc.SendAsync(email);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				await Task.FromResult(0);
+			}
+
 		}
+
+
+		//public List<TicketNotification> GetUnreadNotifications()
+		//{
+		//	var currentUserId = HttpContext.Current.User.Identity.GetUserId();
+		//	return db.TicketNotifications.Where(t => t.UserId == currentUserId && iterator.IsRead).ToList();
+		//}
 	}
 }

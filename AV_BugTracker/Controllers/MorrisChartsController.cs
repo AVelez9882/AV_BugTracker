@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace AV_BugTracker.Controllers
 {
+    [Authorize]
     public class MorrisChartsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

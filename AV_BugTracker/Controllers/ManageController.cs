@@ -53,6 +53,7 @@ namespace AV_BugTracker.Controllers
 
         //
         // GET: /Manage/Index
+        [Authorize]
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -79,6 +80,7 @@ namespace AV_BugTracker.Controllers
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
@@ -102,6 +104,7 @@ namespace AV_BugTracker.Controllers
 
         //
         // GET: /Manage/AddPhoneNumber
+        [Authorize]
         public ActionResult AddPhoneNumber()
         {
             return View();
@@ -163,6 +166,7 @@ namespace AV_BugTracker.Controllers
 
         //
         // GET: /Manage/VerifyPhoneNumber
+        [Authorize]
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
@@ -216,6 +220,7 @@ namespace AV_BugTracker.Controllers
 
         //
         // GET: /Manage/ChangePassword
+        [Authorize]
         public ActionResult ChangePassword()
         {
             return View();
@@ -224,6 +229,7 @@ namespace AV_BugTracker.Controllers
         //
         // POST: /Manage/ChangePassword
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ExtendedChangeViewModel model)
         {
@@ -257,6 +263,7 @@ namespace AV_BugTracker.Controllers
 
         //
         // GET: /Manage/SetPassword
+        [AllowAnonymous]
         public ActionResult SetPassword()
         {
             return View();
@@ -289,6 +296,7 @@ namespace AV_BugTracker.Controllers
 
         //
         // GET: /Manage/ManageLogins
+        [Authorize]
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -322,6 +330,7 @@ namespace AV_BugTracker.Controllers
 
         //
         // GET: /Manage/LinkLoginCallback
+        [Authorize]
         public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());

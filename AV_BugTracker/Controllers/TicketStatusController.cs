@@ -15,6 +15,7 @@ namespace AV_BugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: TicketStatus
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.TicketStatuses.ToList());
@@ -36,6 +37,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: TicketStatus/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -59,6 +61,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: TicketStatus/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -90,6 +93,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: TicketStatus/Delete/5
+        [Authorize (Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

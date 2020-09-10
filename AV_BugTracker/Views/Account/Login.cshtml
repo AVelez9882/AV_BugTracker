@@ -8,6 +8,8 @@
 
 <head>
 	<link href="~/Content/Login.css" rel="stylesheet" />
+	<link rel="icon" href="~/favicon.png" type="image/x-icon">
+	<title>Login - BugSpot | Angelica Velez</title>
 </head>
 
 
@@ -61,12 +63,17 @@
 			</p>
 			<br />
 			<hr><p>Or Connect With</p><hr>
-			<ul>
-				<li><i class="fab fa-facebook-f fa-2x"></i></li>
-				<li><i class="fab fa-twitter fa-2x"></i></li>
-				<li><i class="fab fa-github fa-2x"></i></li>
-				<li><i class="fab fa-linkedin-in fa-2x"></i></li>
-			</ul>
+			<div class="col-md-4">
+				<section id="socialloginform">
+					@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+				</section>
+			</div>
+			@*<ul>
+			<li><i class="fab fa-facebook-f fa-2x"></i></li>
+			<li><i class="fab fa-twitter fa-2x"></i></li>
+			<li><i class="fab fa-github fa-2x"></i></li>
+			<li><i class="fab fa-linkedin-in fa-2x"></i></li>
+		</ul>*@
 			<div class="clearfix"></div>
 			<span class="copyright">&copy;2020 Angelica Velez</span>
 		</div>

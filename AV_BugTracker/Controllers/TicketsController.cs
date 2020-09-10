@@ -9,11 +9,12 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using AV_BugTracker.Models;
 using AV_BugTracker.Helpers;
+using System.Threading.Tasks;
 
 namespace AV_BugTracker.Controllers
 {
-    //[Authorize]
-    public class TicketsController : Controller
+	[Authorize]
+	public class TicketsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ProjectHelper projectHelper = new ProjectHelper();
@@ -26,29 +27,6 @@ namespace AV_BugTracker.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            //var userId = User.Identity.GetUserId();
-            //var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
-            //List<Ticket> model = new List<Ticket>();
-            //switch (myRole)
-            //{
-            //    case "Admin":
-            //        model = db.Tickets.ToList();
-            //        break;
-            //    case "ProjectManager":
-            //    case "Developer":
-            //        model = projectHelper.ListUserProjects(userId).SelectMany(p => p.Tickets).ToList();
-            //        break;
-            //    case "Submitter":
-            //        model = db.Tickets.Where(T => T.SubmitterId == userId).ToList();
-            //        break;
-            //    default:
-            //        return RedirectToAction("Index", "Home");
-            //}
-            //return View(model);
-
-            //var myUserId = User.Identity.GetUserId()
-            //var myTickets = ticketManager.GetMyTickets(myUserId);
-            //return View(myTickets);
             return View(db.Tickets.ToList());
         }
 
@@ -101,9 +79,9 @@ namespace AV_BugTracker.Controllers
             return View(ticket);
         }
 
-        // GET: Tickets/Create
-        //[Authorize(Roles = "Submitter")]
-        public ActionResult Create()
+		// GET: Tickets/Create
+		[Authorize(Roles = "Submitter")]
+		public ActionResult Create()
         {
             var userId = User.Identity.GetUserId();
             if (userId == null)
@@ -150,6 +128,7 @@ namespace AV_BugTracker.Controllers
         }
 
         // GET: Tickets/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -174,7 +153,7 @@ namespace AV_BugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ProjectId,TicketPriorityId,TicketStatusId,TicketTypeId,SubmitterId,DeveloperId,Issue,IssueDescription,Created,IsResolved,IsArchived")] Ticket ticket)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,ProjectId,TicketPriorityId,TicketStatusId,TicketTypeId,SubmitterId,DeveloperId,Issue,IssueDescription,Created,IsResolved,IsArchived")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -188,7 +167,7 @@ namespace AV_BugTracker.Controllers
 				//somehow compare the old ticket with the new ticket to make any number
 				//of decisions that might be required 
 				var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
-                ticketManager.ManageTicketNotifications(oldTicket, newTicket);
+                await ticketManager.ManageTicketNotifications(oldTicket, newTicket);
                 historyHelper.ManageHistories(oldTicket, newTicket);
 
                 return RedirectToAction("Index");

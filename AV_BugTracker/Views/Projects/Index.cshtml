@@ -1,18 +1,83 @@
-﻿@model IEnumerable<AV_BugTracker.Models.Project>
+﻿@model AV_BugTracker.ViewModels.ProjectViewModel
+@using AV_BugTracker.Helpers;
 
 @{
 	ViewBag.Title = "Index";
+	var projectHelper = new ProjectHelper();
 }
 
-<h2 class="text-center">Projects</h2>
 
-@if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+@if (User.IsInRole("Developer") || User.IsInRole("Submitter") || User.IsInRole("ProjectManager"))
+{
+	<h2 class="text-center">My Projects</h2>
+	if (Model.MyProjects.Count() == 0)
+	{
+		<h3 class="text-center">You have no assigned projects to display</h3>
+	}
+	else
+	{
+		<div class="row">
+			<div class="col table-responsive btn-gradient card bg-primary btn-air-primary">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>
+								@Html.DisplayName("Name")
+							</th>
+							<th>
+								@Html.DisplayName("Created")
+							</th>
+							<th>
+								@Html.DisplayName("Archived?")
+							</th>
+							<th></th>
+						</tr>
+					</thead>
+
+					<tbody>
+						@foreach (var item in Model.MyProjects)
+						{
+							<tr>
+								<td>
+									@Html.DisplayFor(modelItem => item.Name)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.Created)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.IsArchived)
+								</td>
+								<td>
+									@if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+									{
+										@Html.ActionLink("Edit", "Edit", new { id = item.Id })<span>|</span>;
+									}
+									@Html.ActionLink("Details", "Details", new { id = item.Id })
+								</td>
+							</tr>
+						}
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+	}
+
+	<br />
+	<br />
+}
+
+
+<h2 class="text-center">All Projects</h2>
+
+@if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
 {
 	<button class="btn-gradient btn-air-primary"><a class="text" href=@Url.Action("Create", "Projects")>Create New</a></button>
+	<br />
+	<br />
 }
-<br />
-<br />
-@if (Model.Count() == 0)
+
+@if (Model.AllProjects.Count() == 0)
 {
 	<h3>You have no projects to display</h3>
 }
@@ -24,20 +89,20 @@ else
 				<thead>
 					<tr>
 						<th>
-							@Html.DisplayNameFor(model => model.Name)
+							@Html.DisplayName("Name")
 						</th>
 						<th>
-							@Html.DisplayNameFor(model => model.Created)
+							@Html.DisplayName("Created")
 						</th>
 						<th>
-							@Html.DisplayNameFor(model => model.IsArchived)
+							@Html.DisplayName("Archived?")
 						</th>
 						<th></th>
 					</tr>
 				</thead>
 
 				<tbody>
-					@foreach (var item in Model)
+					@foreach (var item in Model.AllProjects)
 					{
 						<tr>
 							<td>
@@ -49,11 +114,17 @@ else
 							<td>
 								@Html.DisplayFor(modelItem => item.IsArchived)
 							</td>
-							<td>
-								@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-								@Html.ActionLink("Details", "Details", new { id = item.Id }) |
-								@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-							</td>
+							@if (projectHelper.CanEditProject(item.Id))
+							{
+								<td>
+									@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+									@Html.ActionLink("Details", "Details", new { id = item.Id })
+								</td>
+							}
+							@if (projectHelper.CanEditProject(item.Id) != true)
+							{
+								<td></td>
+							}
 						</tr>
 					}
 				</tbody>
@@ -62,6 +133,10 @@ else
 		</div>
 	</div>
 }
+
+<br />
+<br />
+
 
 @section Scripts
 {

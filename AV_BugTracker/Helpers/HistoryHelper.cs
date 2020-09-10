@@ -22,6 +22,7 @@ namespace AV_BugTracker.Helpers
 
 		private void DeveloperUpdate(Ticket oldTicket, Ticket newTicket)
 		{
+
 			if (oldTicket.DeveloperId != newTicket.DeveloperId)
 			{
 				var history = new TicketHistory()
@@ -29,13 +30,14 @@ namespace AV_BugTracker.Helpers
 					TicketId = newTicket.Id,
 					UserId = HttpContext.Current.User.Identity.GetUserId(),
 					Property = "Developer",
-					OldValue = oldTicket.Developer.FullName == null ? "No Developer Assigned" : oldTicket.Developer.FullName,
-					NewValue = newTicket.Developer.FullName == null ? "No Developer Assigned" : newTicket.Developer.FullName,
+					OldValue = oldTicket.DeveloperId == null ? "No Developer Assigned" : oldTicket.Developer.FullName,
+					NewValue = newTicket.DeveloperId == null ? "No Developer Assigned" : newTicket.Developer.FullName,
 					ChangedOn = DateTime.Now,
 
 				};
 				db.TicketHistories.Add(history);
 			}
+
 		}
 		private void PriorityUpdate(Ticket oldTicket, Ticket newTicket)
 		{

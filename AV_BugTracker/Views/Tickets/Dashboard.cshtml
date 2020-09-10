@@ -5,6 +5,7 @@
 @{
 	ViewBag.Title = "Dashboard";
 	var ticketHelper = new TicketHelper();
+	var iconHelper = new IconHelper();
 }
 
 <head>
@@ -117,7 +118,20 @@
 		</div>
 	</div>
 </div>
-<hr />
+
+@if (ticketHelper.CanEditTicket(Model.Id))
+{
+	<div class="container">
+		<div class="row">
+			<div class="col text-center link btn-gradient btn-air-primary">
+				@Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+}
+
 
 <div class="container">
 	<div class="col table-responsive card btn-gradient btn-air-primary">
@@ -137,7 +151,7 @@
 					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 					<div class="form-group text-center">
 						<div class="col">
-							@Html.TextArea("Comment", new { htmlAttributes = new { @class = "form-control textForm" } })
+							@Html.TextArea("Comment", new { @cols = "80", @rows = "8", @style = "width:100%;" })
 						</div>
 					</div>
 
@@ -196,7 +210,7 @@
 		}
 		else
 		{
-			<h4>No comments have been made for this ticket.</h4>
+			<h4 class="text-center">No comments have been made for this ticket.</h4>
 		}
 
 		<div class="form-group">
@@ -210,39 +224,42 @@
 		<h2 class="text-center">Attachments</h2>
 		<p class="text-center">There are (@Model.Attachments.Count) attachments on this ticket.</p>
 		<table>
-			@using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+			@if (ticketHelper.CanMakeComment(Model.Id))
 			{
-				@Html.AntiForgeryToken()
-				@Html.Hidden("TicketId", Model.Id)
+				using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+				{
+					@Html.AntiForgeryToken()
+					@Html.Hidden("TicketId", Model.Id)
 
-				<div class="form-group text-center">
-					<br />
-					@Html.Label("File Name", htmlAttributes: new { @class = "control-label col-md-2" })
-					<div class="col">
-						@Html.Editor("FileName", new { htmlAttributes = new { @class = "form-control" } })
+					<div class="form-group text-center">
+						<br />
+						@Html.Label("File Name", htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col">
+							@Html.Editor("FileName", new { htmlAttributes = new { @class = "form-control" } })
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group text-center">
-					@Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
-					<div class="col">
-						@Html.Editor("AttachmentDescription", new { htmlAttributes = new { @class = "form-control" } })
+					<div class="form-group">
+						@Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col">
+							@Html.TextArea("AttachmentDescription", new { @cols = "80", @rows = "8", @style = "width:100%;" })
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group">
-					@Html.Label("Attachment", htmlAttributes: new { @class = "control-label col-md-2" })
-					<div class="col">
-						<input type="file" name="file" />
+					<div class="form-group">
+						@Html.Label("Attachment", htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col">
+							<input type="file" name="file" />
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group text-center">
-					<div class="col">
-						<input type="submit" value="Add Attachment" class="btn btn-dark" />
+					<div class="form-group text-center">
+						<div class="col">
+							<input type="submit" value="Add Attachment" class="btn btn-dark" />
+						</div>
 					</div>
-				</div>
 
+				}
 			}
 
 			<hr />
@@ -251,7 +268,6 @@
 				<thead>
 					<tr>
 						<th>
-							@Html.DisplayName("Icon")
 						</th>
 						<th>
 							@Html.DisplayName("Name")
@@ -268,6 +284,7 @@
 					{
 						<tr>
 							<td>
+								<img src="@iconHelper.GetIcon(Path.GetExtension(attachment.FilePath))" class="img-100" />
 							</td>
 							<td>
 								@Html.DisplayFor(modelItem => attachment.FileName)
@@ -288,59 +305,62 @@
 		</div>
 	</div>
 
-	<div class="container btn-gradient card btn-air-primary">
-		<h2 class="text-center">Histories</h2>
-		<p class="text-center">There are (@Model.Histories.Count) changes that have been made on this ticket.</p>
-		<table class="table" id="history">
-			<thead>
-				<tr>
-					<th>
-						Changed By
-					</th>
-					<th>
-						Property
-					</th>
-					<th>
-						Old Value
-					</th>
-					<th>
-						New Value
-					</th>
-					<th>
-						Changed On
-					</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				@foreach (var item in Model.Histories)
-				{
+	@if (ticketHelper.CanMakeComment(Model.Id))
+	{
+		<div class="container btn-gradient card btn-air-primary">
+			<h2 class="text-center">Histories</h2>
+			<p class="text-center">There are (@Model.Histories.Count) changes that have been made on this ticket.</p>
+			<table class="table" id="history">
+				<thead>
 					<tr>
-						<td>
-							@Html.DisplayFor(modelItem => item.User.FirstName)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.Property)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.OldValue)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.NewValue)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.ChangedOn)
-						</td>
+						<th>
+							Changed By
+						</th>
+						<th>
+							Property
+						</th>
+						<th>
+							Old Value
+						</th>
+						<th>
+							New Value
+						</th>
+						<th>
+							Changed On
+						</th>
 					</tr>
-				}
-			</tbody>
-		</table>
-		<div class="form-group">
-			<div class="col">
-				<button class="text-center btn-dark"><a href=@Url.Action("Index", "Tickets")>Back to Ticket List</a></button>
+				</thead>
+
+				<tbody>
+					@foreach (var item in Model.Histories)
+					{
+						<tr>
+							<td>
+								@Html.DisplayFor(modelItem => item.User.FirstName)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Property)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.OldValue)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.NewValue)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.ChangedOn)
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<div class="form-group">
+				<div class="col">
+					<button class="text-center btn-dark"><a href=@Url.Action("Index", "Tickets")>Back to Ticket List</a></button>
+				</div>
 			</div>
 		</div>
-	</div>
+	}
 </div>
 
 

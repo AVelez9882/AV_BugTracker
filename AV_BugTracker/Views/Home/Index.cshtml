@@ -10,6 +10,33 @@
 	</style>
 </head>
 
+@if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+{
+	<ul>
+		<li class="text-center">
+			<button class="btn-gradient btn-air-primary" style="width:50%"><a href="@Url.Action("Index", "Users")">Users</a></button>
+		</li>
+		<br />
+		<br />
+		<li class="text-center">
+			<button class="btn-gradient btn-air-primary" style="width:50%"><a href="@Url.Action("Create", "Projects")">Create Project</a></button>
+		</li>
+		<br />
+		<br />
+	</ul>
+}
+
+@if (User.IsInRole("Submitter"))
+{
+	<ul>
+		<li class="text-center">
+			<button class="btn-gradient btn-air-primary" style="width:50%"><a href="@Url.Action("Create", "Tickets")">Create Ticket</a></button>
+		</li>
+	</ul>
+}
+
+<br />
+<br />
 
 <div class="container-fluid">
 	<div class="row">

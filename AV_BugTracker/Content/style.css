@@ -23770,7 +23770,7 @@ body.dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .page-body, b
 		}
 
 		body.dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .page-body .card .dataTables_wrapper .dataTables_paginate .paginate_button, body.dark-only .compact-wrapper .page-body-wrapper .page-body .card .dataTables_wrapper .dataTables_paginate .paginate_button {
-			color: rgba(255,255,255,0.7) !important
+			color: black !important
 		}
 
 			body.dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .page-body .card .dataTables_wrapper .dataTables_paginate .paginate_button.current, body.dark-only .page-wrapper.horizontal-wrapper .page-body-wrapper .page-body .card .dataTables_wrapper .dataTables_paginate .paginate_button:active, body.dark-only .compact-wrapper .page-body-wrapper .page-body .card .dataTables_wrapper .dataTables_paginate .paginate_button.current, body.dark-only .compact-wrapper .page-body-wrapper .page-body .card .dataTables_wrapper .dataTables_paginate .paginate_button:active {

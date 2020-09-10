@@ -81,5 +81,31 @@ namespace AV_BugTracker.Helpers
 
 			return resultList;
 		}
+
+
+		public bool CanEditProject(int projectId)
+		{
+			var userId = HttpContext.Current.User.Identity.GetUserId();
+			var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+			switch (myRole)
+			{
+				case "Admin":
+					return true;
+				case "ProjectManager":
+					if (IsUserOnProject(userId, projectId))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				case "Developer":
+				case "Submitter":
+					return false;
+				default:
+					return false;
+			}
+		}
 	}
 }
